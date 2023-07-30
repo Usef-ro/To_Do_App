@@ -6,12 +6,11 @@ import com.example.to_docompose.data.domain.model.ToDoDao
 import com.example.to_docompose.data.domain.model.ToDoTask
 
 
-@Database(entities = [ToDoTask::class],version=1, exportSchema = false)
+@Database(entities = [ToDoTask::class], version = 1, exportSchema = false)
 
-abstract class ToDoDatabase: RoomDatabase() {
+abstract class ToDoDatabase : RoomDatabase() {
 
-    abstract fun toDoDao():ToDoDao
-
+    abstract fun toDoDao(): ToDoDao
 
 
 }

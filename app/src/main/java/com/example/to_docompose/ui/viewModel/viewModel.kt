@@ -1,6 +1,5 @@
 package com.example.to_docompose.ui.viewModel
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.to_docompose.data.domain.Repository.ToDoRepository
@@ -13,22 +12,20 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class viewModel @Inject constructor(private val toDoRepository: ToDoRepository):ViewModel() {
+class viewModel @Inject constructor(private val toDoRepository: ToDoRepository) : ViewModel() {
 
 
+    val _allTasks = MutableStateFlow<List<ToDoTask>>(emptyList())
 
-    val _allTasks= MutableStateFlow<List<ToDoTask>>(emptyList())
+    val allTasks: StateFlow<List<ToDoTask>> = _allTasks
 
-    val allTasks: StateFlow<List<ToDoTask>> =_allTasks
-
-    fun getAllTask(){
+    fun getAllTask() {
         viewModelScope.launch {
             toDoRepository.getAllTasks.collect({
-                    _allTasks.value=it
+                _allTasks.value = it
             })
         }
     }
-
 
 
 }

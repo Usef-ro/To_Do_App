@@ -80,19 +80,19 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val LowPriorityColor=Color(0xFF00C980)
-val MediumPriorityColor=Color(0xFFFFC114)
-val HighPriorityColor=Color(0xFFFF4646)
-val NonePriorityColor=Color(0xFFFFFFFF)
+val LowPriorityColor = Color(0xFF00C980)
+val MediumPriorityColor = Color(0xFFFFC114)
+val HighPriorityColor = Color(0xFFFF4646)
+val NonePriorityColor = Color(0xFFFFFFFF)
 
-val LightGray=Color(0xFFFCFCFCF)
-val MEDIUMGray=Color(0xFF9C9C9C)
-val DARKGray=Color(0xFFF141414)
+val LightGray = Color(0xFFFCFCFCF)
+val MEDIUMGray = Color(0xFF9C9C9C)
+val DARKGray = Color(0xFFF141414)
 
-val Colors.topAppBarContent:Color
+val Colors.topAppBarContent: Color
     @Composable
-get() = if(!isSystemInDarkTheme()) Color.White else LightGray
+    get() = if (!isSystemInDarkTheme()) Color.White else LightGray
 
-val Colors.topAppBarBack:Color
+val Colors.topAppBarBack: Color
     @Composable
-    get() = if(!isSystemInDarkTheme()) Pink80 else Color.Black
+    get() = if (!isSystemInDarkTheme()) Pink80 else Color.Black

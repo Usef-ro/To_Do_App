@@ -11,32 +11,32 @@ import javax.inject.Inject
 class ToDoRepository @Inject constructor(val toDoDao: ToDoDao) {
 
     val getAllTasks: Flow<List<ToDoTask>> = toDoDao.getAllTasks()
-    val sortByLow:Flow<List<ToDoTask>> = toDoDao.sortByLowPriority()
-    val sortByHigh:Flow<List<ToDoTask>> = toDoDao.sortByHighPriority()
+    val sortByLow: Flow<List<ToDoTask>> = toDoDao.sortByLowPriority()
+    val sortByHigh: Flow<List<ToDoTask>> = toDoDao.sortByHighPriority()
 
-    fun getSelectedTasks(task:Int): Flow<ToDoTask> {
+    fun getSelectedTasks(task: Int): Flow<ToDoTask> {
         return toDoDao.getSelectedTasks(taskId = task)
     }
 
-    suspend fun addTask(task:ToDoTask){
+    suspend fun addTask(task: ToDoTask) {
         toDoDao.addTask(toDoTask = task)
     }
-    suspend fun updateTask(task:ToDoTask){
+
+    suspend fun updateTask(task: ToDoTask) {
         toDoDao.updateTask(toDoTask = task)
     }
 
-    suspend fun removeTask(task:ToDoTask){
+    suspend fun removeTask(task: ToDoTask) {
         toDoDao.deleteTask(taskId = task)
     }
 
-    suspend fun deleteAll(){
+    suspend fun deleteAll() {
         toDoDao.deleteAllTasks()
     }
 
-    fun searchDataBase(searchQuery:String):Flow<List<ToDoTask>>{
+    fun searchDataBase(searchQuery: String): Flow<List<ToDoTask>> {
         return toDoDao.searchDatabase(searchQuery)
     }
-
 
 
 }

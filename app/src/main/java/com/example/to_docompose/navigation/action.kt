@@ -1,9 +1,9 @@
 package com.example.to_docompose.navigation
 
-enum class action  {
+enum class action {
     ADD,
     UPDATE,
-    DELETE  ,
+    DELETE,
     UNOD,
     NO_ACTION
 }
