@@ -38,15 +38,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.to_docompose.R
 import com.example.to_docompose.data.domain.model.Priority
+import com.example.to_docompose.ui.viewModel.viewModel
 import java.net.ContentHandler
 
 @Composable
-fun listAppBar() {
-//    defaultListAppBar(onDelete = {}, sort = {}, onSearchClick = {
+fun listAppBar(
+    viewModel: viewModel,
+    seachAppBarStatus: searchAppBarStatus,
+    searchText:String
+) {
 //
-//    })
-    seachAppBar(text = "Search", onTextChanged = {}
-        , onCloseClick = { /*TODO*/ },onSearchClick = {})
+    when(seachAppBarStatus){
+        searchAppBarStatus.CLOSED->{
+            defaultListAppBar(onDelete = {}, sort = {}, onSearchClick = {
+                viewModel.serchAppBarState.value=searchAppBarStatus.OPENED
+    })
+        }else->{
+        seachAppBar(text = searchText, onTextChanged = {newValue ->
+            viewModel.searchText.value=newValue}
+            , onCloseClick = {
+                viewModel.searchText.value=""
+                             viewModel.serchAppBarState.value=searchAppBarStatus.CLOSED
+            },onSearchClick = {
+                viewModel.serchAppBarState.value=searchAppBarStatus.OPENED
+            })
+        }
+    }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -161,6 +179,7 @@ fun seachAppBar(
 //        tonalElevation=
 color =   MaterialTheme.colorScheme.onSecondary
     ) {
+
 TextField(value = text, modifier = Modifier.fillMaxWidth(),
     placeholder = { Text(text = "Search",color= Color.White)},
     onValueChange ={ onTextChanged(it) },
