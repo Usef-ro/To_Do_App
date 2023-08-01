@@ -2,6 +2,7 @@ package com.example.to_docompose.ui.screens.list
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,12 +16,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,7 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -38,29 +39,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.to_docompose.R
 import com.example.to_docompose.data.domain.model.Priority
-import com.example.to_docompose.ui.viewModel.viewModel
-import java.net.ContentHandler
+import com.example.to_docompose.ui.viewModel.viewModell
 
 @Composable
 fun listAppBar(
-    viewModel: viewModel,
+    viewModell: viewModell,
     seachAppBarStatus: searchAppBarStatus,
     searchText:String
 ) {
-//
+
+    Log.e("listAppBar", "Seach"+ viewModell.serchAppBarState)
     when(seachAppBarStatus){
+
         searchAppBarStatus.CLOSED->{
             defaultListAppBar(onDelete = {}, sort = {}, onSearchClick = {
-                viewModel.serchAppBarState.value=searchAppBarStatus.OPENED
-    })
+                viewModell.serchAppBarState.value=searchAppBarStatus.OPENED
+
+
+            })
         }else->{
         seachAppBar(text = searchText, onTextChanged = {newValue ->
-            viewModel.searchText.value=newValue}
+            viewModell.searchText.value=newValue}
             , onCloseClick = {
-                viewModel.searchText.value=""
-                             viewModel.serchAppBarState.value=searchAppBarStatus.CLOSED
+                viewModell.searchText.value=""
+                viewModell.serchAppBarState.value=searchAppBarStatus.CLOSED
             },onSearchClick = {
-                viewModel.serchAppBarState.value=searchAppBarStatus.OPENED
+                viewModell.serchAppBarState.value=searchAppBarStatus.OPENED
             })
         }
     }
@@ -101,7 +105,7 @@ fun SearchActions(
 
     onSearchClick: () -> Unit
 ) {
-    IconButton(onClick = { onSearchClick }) {
+    IconButton(onClick = onSearchClick) {
 
         Icon(
             imageVector = Icons.Filled.Search,
@@ -117,6 +121,7 @@ fun sortActions(
 
     ) {
 
+
     var expand by remember {
         mutableStateOf(false)
     }
@@ -127,10 +132,28 @@ fun sortActions(
         )
         DropdownMenu(expanded = expand, onDismissRequest = { expand = false }) {
 
-            DropdownMenuItem(text = { "Low" },
+
+//            listItem.forEachIndexed { index, s ->
+                DropdownMenuItem(
+                    colors =MenuDefaults.itemColors(textColor = Color.Black)
+                    ,text = {    priorityItem(priority = Priority.LOW)},
+                    onClick = {
+                        expand = false
+                        sort(Priority.LOW)
+                    })
+
+            DropdownMenuItem(
+                text = {    priorityItem(priority = Priority.MEDIUM)},
+                onClick = {
+
+                    expand = false
+                })
+
+            DropdownMenuItem(
+
+                text = {    priorityItem(priority = Priority.HIGH) },
                 onClick = {
                     expand = false
-                    sort(Priority.LOW)
                 })
 
         }
@@ -153,7 +176,9 @@ fun deleteAllAction(
         DropdownMenu(expanded = expand,
             onDismissRequest = { expand = false }) {
 
-            DropdownMenuItem(text = { "delete" },
+            DropdownMenuItem(
+                text = {
+                    Text(text = "delete") },
                 onClick = {
                     onDelete()
                     expand = false
@@ -196,7 +221,7 @@ TextField(value = text, modifier = Modifier.fillMaxWidth(),
         }
     }
     ,trailingIcon = {
-        IconButton(onClick = { onCloseClick }) {
+        IconButton(onClick = onCloseClick ) {
             Icon(imageVector =Icons.Filled.Close , contentDescription ="close",
                 tint = MaterialTheme.colorScheme.primary )
         }

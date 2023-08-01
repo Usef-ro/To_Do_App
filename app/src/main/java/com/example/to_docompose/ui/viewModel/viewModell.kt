@@ -1,8 +1,9 @@
 package com.example.to_docompose.ui.viewModel
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.to_docompose.data.domain.Repository.ToDoRepository
@@ -13,13 +14,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.compose.runtime.mutableStateOf
+
 
 @HiltViewModel
-class viewModel @Inject constructor(private val toDoRepository: ToDoRepository) : ViewModel() {
+class viewModell @Inject constructor(
+    private val toDoRepository: ToDoRepository) : ViewModel() {
 
-    val serchAppBarState:MutableState<searchAppBarStatus> = mutableStateOf(searchAppBarStatus.CLOSED)
-
+    val serchAppBarState:MutableState<searchAppBarStatus> =
+        mutableStateOf(searchAppBarStatus.CLOSED)
+    fun setserchAppBarState(){
+        serchAppBarState.value= searchAppBarStatus.OPENED
+    }
     val searchText :MutableState<String> = mutableStateOf("")
 
     val _allTasks = MutableStateFlow<List<ToDoTask>>(emptyList())
@@ -28,9 +33,9 @@ class viewModel @Inject constructor(private val toDoRepository: ToDoRepository) 
 
     fun getAllTask() {
         viewModelScope.launch {
-            toDoRepository.getAllTasks.collect({
+            toDoRepository.getAllTasks.collect {
                 _allTasks.value = it
-            })
+            }
         }
     }
 

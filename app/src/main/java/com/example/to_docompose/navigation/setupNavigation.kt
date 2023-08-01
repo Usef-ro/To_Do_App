@@ -4,14 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.to_docompose.ui.viewModel.viewModel
+import com.example.to_docompose.ui.viewModel.viewModell
 import com.example.to_docompose.util.Constants.LIST_SCREEN
 
 
 @Composable
 fun setupNavigation(
     navHostController: NavHostController
-,viewModel: viewModel
+    , viewModell: viewModell
 ) {
 
     val sreen = remember(navHostController) {
@@ -22,7 +22,12 @@ fun setupNavigation(
         navController = navHostController,
         startDestination = LIST_SCREEN
     ) {
-        listComposable(navigateToTaskScreen = sreen.task,viewModel=viewModel)
-        taskComposable(navigateToListScreen = sreen.task,viewModel=viewModel)
+        listComposable(navigateToTaskScreen = sreen.task
+            , viewModell=viewModell
+        )
+        taskComposable(navigateToListScreen = sreen.task
+            , viewModell=viewModell
+        )
     }
+
 }

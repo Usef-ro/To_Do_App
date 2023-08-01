@@ -112,7 +112,8 @@ dependencies {
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
 
 
     // optional - Kotlin Extensions and Coroutines support for Room
@@ -122,5 +123,14 @@ dependencies {
 
 
 
+
+    //lifecycle
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+//    // Lifecycles only (without ViewModel or LiveData)
+//    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
+//    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
 }
