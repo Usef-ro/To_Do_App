@@ -46,5 +46,15 @@ class viewModell @Inject constructor(
        }
     }
 
+    val _selectedTasks:MutableStateFlow<ToDoTask?> =MutableStateFlow(null)
+    val selected:StateFlow<ToDoTask?> = _selectedTasks
+
+    fun getSelectedTask(task:Int){
+        viewModelScope.launch {
+            toDoRepository.getSelectedTasks(task = task).collect {task->
+            _selectedTasks.value = task
+            }
+        }
+    }
 
 }

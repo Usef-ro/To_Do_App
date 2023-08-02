@@ -14,6 +14,7 @@ class screen(navController: NavHostController) {
     }
 
     val task: (Int) -> Unit = { taskId ->
-        navController.navigate("list/$taskId")
+        navController.navigate("task/$taskId")
     }
+
 }
