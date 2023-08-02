@@ -10,8 +10,7 @@ import com.example.to_docompose.util.Constants.LIST_SCREEN
 
 @Composable
 fun setupNavigation(
-    navHostController: NavHostController
-    , viewModell: viewModell
+    navHostController: NavHostController, viewModell: viewModell
 ) {
 
     val sreen = remember(navHostController) {
@@ -22,11 +21,11 @@ fun setupNavigation(
         navController = navHostController,
         startDestination = LIST_SCREEN
     ) {
-        listComposable(navigateToTaskScreen = sreen.task
-            , viewModell=viewModell
+        listComposable(
+            navigateToTaskScreen = sreen.task, viewModell = viewModell
         )
-        taskComposable(navigateToListScreen = sreen.task
-            , viewModell=viewModell
+        taskComposable(
+            navigateToListScreen = sreen.list, viewModell = viewModell
         )
     }
 

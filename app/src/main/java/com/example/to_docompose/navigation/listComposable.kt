@@ -7,20 +7,20 @@ import androidx.navigation.navArgument
 import com.example.to_docompose.ui.screens.list.listScreen
 import com.example.to_docompose.ui.viewModel.viewModell
 import com.example.to_docompose.util.Constants
+import com.example.to_docompose.util.Constants.LIST_ARGUMENT_KEY
 
 
 fun NavGraphBuilder.listComposable(
-    navigateToTaskScreen: (taskId:Int) -> Unit
-    ,
+    navigateToTaskScreen: (taskId: Int) -> Unit,
     viewModell: viewModell
 ) {
 
     composable(
         route = Constants.LIST_SCREEN,
-        arguments = listOf(navArgument("action") {
+        arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
             type = NavType.StringType
         })
     ) {
-        listScreen(navigateToTaskScreen = navigateToTaskScreen,viewModell=viewModell)
+        listScreen(navigateToTaskScreen = navigateToTaskScreen, viewModell = viewModell)
     }
 }

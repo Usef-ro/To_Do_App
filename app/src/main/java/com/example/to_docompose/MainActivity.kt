@@ -17,14 +17,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     lateinit var navController: NavHostController
-     val viewModell: viewModell by viewModels()
+    val viewModell: viewModell by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ToDoComposeTheme {
                 navController = rememberNavController()
-                setupNavigation(navHostController = navController
-                    ,viewModell=viewModell
+                setupNavigation(
+                    navHostController = navController, viewModell = viewModell
                 )
             }
         }

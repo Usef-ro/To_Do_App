@@ -17,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -45,26 +44,28 @@ import com.example.to_docompose.ui.viewModel.viewModell
 fun listAppBar(
     viewModell: viewModell,
     seachAppBarStatus: searchAppBarStatus,
-    searchText:String
+    searchText: String
 ) {
 
-    Log.e("listAppBar", "Seach"+ viewModell.serchAppBarState)
-    when(seachAppBarStatus){
+    Log.e("listAppBar", "Seach" + viewModell.serchAppBarState)
+    when (seachAppBarStatus) {
 
-        searchAppBarStatus.CLOSED->{
+        searchAppBarStatus.CLOSED -> {
             defaultListAppBar(onDelete = {}, sort = {}, onSearchClick = {
-                viewModell.serchAppBarState.value=searchAppBarStatus.OPENED
+                viewModell.serchAppBarState.value = searchAppBarStatus.OPENED
 
 
             })
-        }else->{
-        seachAppBar(text = searchText, onTextChanged = {newValue ->
-            viewModell.searchText.value=newValue}
-            , onCloseClick = {
-                viewModell.searchText.value=""
-                viewModell.serchAppBarState.value=searchAppBarStatus.CLOSED
-            },onSearchClick = {
-                viewModell.serchAppBarState.value=searchAppBarStatus.OPENED
+        }
+
+        else -> {
+            seachAppBar(text = searchText, onTextChanged = { newValue ->
+                viewModell.searchText.value = newValue
+            }, onCloseClick = {
+                viewModell.searchText.value = ""
+                viewModell.serchAppBarState.value = searchAppBarStatus.CLOSED
+            }, onSearchClick = {
+                viewModell.serchAppBarState.value = searchAppBarStatus.OPENED
             })
         }
     }
@@ -134,16 +135,16 @@ fun sortActions(
 
 
 //            listItem.forEachIndexed { index, s ->
-                DropdownMenuItem(
-                    colors =MenuDefaults.itemColors(textColor = Color.Black)
-                    ,text = {    priorityItem(priority = Priority.LOW)},
-                    onClick = {
-                        expand = false
-                        sort(Priority.LOW)
-                    })
+            DropdownMenuItem(
+                colors = MenuDefaults.itemColors(textColor = Color.Black),
+                text = { priorityItem(priority = Priority.LOW) },
+                onClick = {
+                    expand = false
+                    sort(Priority.LOW)
+                })
 
             DropdownMenuItem(
-                text = {    priorityItem(priority = Priority.MEDIUM)},
+                text = { priorityItem(priority = Priority.MEDIUM) },
                 onClick = {
 
                     expand = false
@@ -151,7 +152,7 @@ fun sortActions(
 
             DropdownMenuItem(
 
-                text = {    priorityItem(priority = Priority.HIGH) },
+                text = { priorityItem(priority = Priority.HIGH) },
                 onClick = {
                     expand = false
                 })
@@ -178,7 +179,8 @@ fun deleteAllAction(
 
             DropdownMenuItem(
                 text = {
-                    Text(text = "delete") },
+                    Text(text = "delete")
+                },
                 onClick = {
                     onDelete()
                     expand = false
@@ -193,55 +195,64 @@ fun deleteAllAction(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun seachAppBar(
-    text:String,
-    onTextChanged:(String)->Unit,
-    onCloseClick:()->Unit,
-    onSearchClick:(String)->Unit
-){
-    Surface(modifier = Modifier
-        .fillMaxWidth()
-        .height(56.dp),
+    text: String,
+    onTextChanged: (String) -> Unit,
+    onCloseClick: () -> Unit,
+    onSearchClick: (String) -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp),
 //        tonalElevation=
-color =   MaterialTheme.colorScheme.onSecondary
+        color = MaterialTheme.colorScheme.onSecondary
     ) {
 
-TextField(value = text, modifier = Modifier.fillMaxWidth(),
-    placeholder = { Text(text = "Search",color= Color.White)},
-    onValueChange ={ onTextChanged(it) },
-    textStyle = TextStyle(
-        color=MaterialTheme.colorScheme.primary,
-        fontSize=MaterialTheme.typography.titleSmall.fontSize
-    ),
-    singleLine = true,
-    leadingIcon = {
-        IconButton(onClick = { }) {
-            Icon(modifier = Modifier.alpha(2f), imageVector =
-            Icons.Filled.Search,contentDescription = "Search Icon",
-                tint = MaterialTheme.colorScheme.primary)
-        }
-    }
-    ,trailingIcon = {
-        IconButton(onClick = onCloseClick ) {
-            Icon(imageVector =Icons.Filled.Close , contentDescription ="close",
-                tint = MaterialTheme.colorScheme.primary )
-        }
-    },
-    keyboardOptions = KeyboardOptions(
-        imeAction = ImeAction.Search,
-    ), keyboardActions = KeyboardActions(
-        onSearch = { onSearchClick(text) }
-    ),
-    colors = TextFieldDefaults.textFieldColors(
-        cursorColor = MaterialTheme.colorScheme.primary,
-        focusedIndicatorColor = Color.Transparent
-        ,disabledIndicatorColor = Color.Transparent,
-        unfocusedIndicatorColor = Color.Transparent,
+//        val containerColor = FilledTextFieldTokens.ContainerColor.toColor()
+        TextField(value = text, modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text(text = "Search", color = Color.White) },
+            onValueChange = { onTextChanged(it) },
+            textStyle = TextStyle(
+                color = MaterialTheme.colorScheme.primary,
+                fontSize = MaterialTheme.typography.titleSmall.fontSize
+            ),
+            singleLine = true,
+            leadingIcon = {
+                IconButton(onClick = { }) {
+                    Icon(
+                        modifier = Modifier.alpha(2f), imageVector =
+                        Icons.Filled.Search, contentDescription = "Search Icon",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }, trailingIcon = {
+                IconButton(onClick = onCloseClick) {
+                    Icon(
+                        imageVector = Icons.Filled.Close, contentDescription = "close",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search,
+            ), keyboardActions = KeyboardActions(
+                onSearch = { onSearchClick(text) }
+            ),
+            colors = TextFieldDefaults.colors(
+//                focusedContainerColor = containerColor,
+//                unfocusedContainerColor = containerColor,
+//                disabledContainerColor = containerColor,
+                cursorColor = MaterialTheme.colorScheme.primary,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
 //        backgroundColor = Color.Transparent
-    )
-    )
+                disabledIndicatorColor = Color.Transparent,
+            )
+        )
 
     }
 }
+
 @Composable
 @Preview(uiMode = UI_MODE_NIGHT_NO)
 fun prev1() {
@@ -269,10 +280,12 @@ fun prev3() {
 }
 
 
-
 @Composable
 @Preview
 fun prev4() {
- seachAppBar(text = "Search", onTextChanged = {}
-     , onCloseClick = { /*TODO*/ },onSearchClick = {})
+    seachAppBar(
+        text = "Search",
+        onTextChanged = {},
+        onCloseClick = { /*TODO*/ },
+        onSearchClick = {})
 }

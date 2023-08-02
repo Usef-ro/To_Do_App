@@ -11,49 +11,64 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.unit.dp
-import com.example.to_docompose.data.domain.model.ToDoTask
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.example.to_docompose.data.domain.model.Priority
+import com.example.to_docompose.data.domain.model.ToDoTask
 import com.example.to_docompose.ui.theme.LARGE_PADDING
 import com.example.to_docompose.ui.theme.PRIORITY_INDICATORE_SIZE
-import com.example.to_docompose.ui.theme.SMALL_PADDING
+import com.example.to_docompose.util.requestState
 
 @Composable
 fun listContent(
+    toDoTask: requestState<List<ToDoTask>>,
+    navigationToTaskScreen: (taskId: Int) -> Unit,
+    padding: PaddingValues
+) {
+if(toDoTask is requestState.success){
+
+    if(toDoTask.data.isEmpty()){
+
+        emptyContent()
+    }else{
+        listTask(toDoTask = toDoTask.data, navigationToTaskScreen = navigationToTaskScreen, padding = padding)
+    }
+}
+}
+
+@Composable
+fun listTask(
     toDoTask: List<ToDoTask>,
     navigationToTaskScreen: (taskId: Int) -> Unit,
-    padding:PaddingValues
-){
+    padding: PaddingValues){
+    LazyColumn(modifier = Modifier.padding(padding)) {
 
-    LazyColumn(modifier =Modifier.padding(padding)){
-
-        itemsIndexed(toDoTask){index,item->
-            taskItem(toDoTask = item, navigationToTaskScreen =navigationToTaskScreen )
+        itemsIndexed(toDoTask) { index, item ->
+            taskItem(toDoTask = item, navigationToTaskScreen = navigationToTaskScreen)
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
 fun taskItem(
     toDoTask: ToDoTask,
-    navigationToTaskScreen:(taskId:Int) ->Unit) {
+    navigationToTaskScreen: (taskId: Int) -> Unit
+) {
 
     Surface(
-        onClick={navigationToTaskScreen(toDoTask.id)},
+        onClick = { navigationToTaskScreen(toDoTask.id) },
         color = MaterialTheme.colorScheme.onSecondary,
         shape = RectangleShape,
         modifier = Modifier.fillMaxWidth(),
@@ -67,16 +82,18 @@ fun taskItem(
         ) {
 
 
-            Row() {
+            Row {
                 Text(
                     modifier = Modifier.weight(8f),
                     text = toDoTask.title, style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold, maxLines = 1
                 )
 
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f), contentAlignment = Alignment.TopEnd) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f), contentAlignment = Alignment.TopEnd
+                ) {
                     Canvas(
                         modifier = Modifier
                             .width(PRIORITY_INDICATORE_SIZE)
@@ -102,6 +119,8 @@ fun taskItem(
 
 @Composable
 @Preview
-fun prev7(){
-    taskItem(toDoTask = ToDoTask(0,"thft","hhjk", priority = Priority.MEDIUM), navigationToTaskScreen ={} )
+fun prev7() {
+    taskItem(
+        toDoTask = ToDoTask(0, "thft", "hhjk", priority = Priority.MEDIUM),
+        navigationToTaskScreen = {})
 }
