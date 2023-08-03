@@ -39,7 +39,7 @@ import com.example.to_docompose.ui.theme.PRIORITY_INDICATORE_SIZE
 fun priorityItemScreen(
     priority: Priority,
     onPrioritySelected:(Priority)->Unit
-    ,padding:PaddingValues?
+
 ){
 
 var expanded by remember {
@@ -52,7 +52,7 @@ var expanded by remember {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp).padding(padding!!)
+            .height(60.dp)
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.onSurface
@@ -91,7 +91,7 @@ var expanded by remember {
 
         }
         DropdownMenu(expanded = expanded,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(fraction = 0.94f),
             onDismissRequest = { expanded = false },) {
             DropdownMenuItem(
                 text = {  priorityItem(priority = Priority.LOW) }
@@ -117,5 +117,5 @@ var expanded by remember {
 @Composable
 @Preview
 fun priorityDropDown(){
-    priorityItemScreen(priority = Priority.LOW, onPrioritySelected ={} ,padding =null)
+    priorityItemScreen(priority = Priority.LOW, onPrioritySelected ={} )
 }

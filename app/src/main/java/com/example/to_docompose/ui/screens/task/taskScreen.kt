@@ -17,7 +17,8 @@ fun taskScreen(navigationToListScreen:(action)->Unit,selectedTask :ToDoTask?){
             taskAppBar(navigationToListScreen = navigationToListScreen,selectedTask =selectedTask )
         },
         content = {
-            priorityItemScreen(priority = Priority.LOW, onPrioritySelected ={},padding=it )
+            taskContent(title="sd", onTitleChange = {},description ="", onDescriptionChange = {}
+                , priority = Priority.HIGH, onPrioritySelected = {}, padding = it)
         }
     )
 
