@@ -49,7 +49,9 @@ fun taskContent(
         )
             priorityItemScreen(priority =priority ,
                 onPrioritySelected =onPrioritySelected)
-        
+        Divider(
+            modifier = Modifier.height(MEDIUM_PADDING)
+        )
         OutlinedTextField(value = description
             , modifier = Modifier.fillMaxSize(), onValueChange = {
             onDescriptionChange(it)

@@ -65,6 +65,8 @@ class viewModell @Inject constructor(
             }
         }
     }
+
+
     fun selectedTask(toDoTask: ToDoTask?){
         if(toDoTask != null){
 
@@ -105,10 +107,10 @@ class viewModell @Inject constructor(
                     addTask()
             }
             com.example.to_docompose.navigation.action.UPDATE->{
-
+                updateTask()
             }
             com.example.to_docompose.navigation.action.DELETE->{
-
+                deleteTask()
             }
             com.example.to_docompose.navigation.action.UNOD->{
 
@@ -119,4 +121,29 @@ class viewModell @Inject constructor(
         }
         this.action.value=com.example.to_docompose.navigation.action.NO_ACTION
     }
+
+    fun updateTask(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val toDoTask=ToDoTask(
+                id=id.value,
+                title=title.value,
+                description=desc.value,
+                priority=priority.value
+            )
+            toDoRepository.updateTask(task=toDoTask)
+        }
+    }
+
+    fun deleteTask(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val toDoTask=ToDoTask(
+                id=id.value,
+                title=title.value,
+                description=desc.value,
+                priority=priority.value
+            )
+            toDoRepository.deleteTask(task=toDoTask)
+        }
+    }
+
 }

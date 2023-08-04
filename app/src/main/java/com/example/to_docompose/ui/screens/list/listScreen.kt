@@ -6,11 +6,15 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import com.example.to_docompose.navigation.action
 import com.example.to_docompose.ui.viewModel.viewModell
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -61,5 +65,27 @@ fun ListFab(
             contentDescription = "Add "
         )
     }
+}
+
+
+@Composable
+fun snakBar(
+//scaffold:ScaffoldDefaults,
+handleDataBaseActions:()->Unit,
+taskTitle:String,
+action:action
+){
+
+    handleDataBaseActions()
+
+    val scope= rememberCoroutineScope()
+    LaunchedEffect(key1 = action ){
+        if(action!=com.example.to_docompose.navigation.action.NO_ACTION){
+            scope.launch {
+//                val snackResult =scaffold.sna
+            }
+        }
+    }
+
 }
 
