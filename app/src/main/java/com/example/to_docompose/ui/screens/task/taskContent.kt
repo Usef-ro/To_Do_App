@@ -26,12 +26,12 @@ fun taskContent(
     onDescriptionChange:(String) ->Unit,
     priority:Priority,
     onPrioritySelected:(Priority)->Unit,
-    padding:PaddingValues
+
 ){
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(padding)
+        .padding(all= LARGE_PADDING)
 
     ) {
 

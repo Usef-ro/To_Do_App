@@ -22,9 +22,12 @@ fun listScreen(
         viewModell.getAllTask()
     }
 
+    val action by viewModell.action
     val allTAsks by viewModell.allTasks.collectAsState()
     val searchAppBarStatus: searchAppBarStatus by viewModell.serchAppBarState
     val searchText: String by viewModell.searchText
+
+    viewModell.handleDataBaseAction(action)
 
     Scaffold(
         content = {
