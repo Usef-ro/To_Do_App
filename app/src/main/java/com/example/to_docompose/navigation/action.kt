@@ -8,21 +8,25 @@ enum class action {
     NO_ACTION
 }
 
-fun String?.action():action{
-    return when{
-        this=="ADD"->{
+fun String?.action(): action {
+    return when {
+        this == "ADD" -> {
             action.ADD
         }
-        this=="UPDATE"->{
+
+        this == "UPDATE" -> {
             action.UPDATE
         }
-        this=="DELETE"->{
+
+        this == "DELETE" -> {
             action.DELETE
         }
-        this=="NO_ACTION"->{
+
+        this == "NO_ACTION" -> {
             action.NO_ACTION
         }
-        this=="UNOD"->{
+
+        this == "UNOD" -> {
             action.UNOD
         }
 

@@ -21,11 +21,11 @@ fun NavGraphBuilder.listComposable(
         arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
             type = NavType.StringType
         })
-    ) {navigate->
-        val action=navigate.arguments?.getString(LIST_ARGUMENT_KEY).action()
+    ) { navigate ->
+        val action = navigate.arguments?.getString(LIST_ARGUMENT_KEY).action()
 
-        LaunchedEffect(key1 = action ){
-            viewModell.action.value=action
+        LaunchedEffect(key1 = action) {
+            viewModell.action.value = action
         }
 
         listScreen(navigateToTaskScreen = navigateToTaskScreen, viewModell = viewModell)

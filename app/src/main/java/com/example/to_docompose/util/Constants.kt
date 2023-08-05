@@ -7,6 +7,6 @@ object Constants {
     val LIST_SCREEN = "list/{action}"
     val TASK_SCREEN = "task/{taskId}"
 
-    val TASK_ARGUMENT_KEY="taskId"
-    val LIST_ARGUMENT_KEY="action"
+    val TASK_ARGUMENT_KEY = "taskId"
+    val LIST_ARGUMENT_KEY = "action"
 }

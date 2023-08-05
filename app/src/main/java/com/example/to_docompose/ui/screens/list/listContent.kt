@@ -35,22 +35,27 @@ fun listContent(
     navigationToTaskScreen: (taskId: Int) -> Unit,
     padding: PaddingValues
 ) {
-if(toDoTask is requestState.success){
+    if (toDoTask is requestState.success) {
 
-    if(toDoTask.data.isEmpty()){
+        if (toDoTask.data.isEmpty()) {
 
-        emptyContent()
-    }else{
-        listTask(toDoTask = toDoTask.data, navigationToTaskScreen = navigationToTaskScreen, padding = padding)
+            emptyContent(padding = padding)
+        } else {
+            listTask(
+                toDoTask = toDoTask.data,
+                navigationToTaskScreen = navigationToTaskScreen,
+                padding = padding
+            )
+        }
     }
-}
 }
 
 @Composable
 fun listTask(
     toDoTask: List<ToDoTask>,
     navigationToTaskScreen: (taskId: Int) -> Unit,
-    padding: PaddingValues){
+    padding: PaddingValues
+) {
     LazyColumn(modifier = Modifier.padding(padding)) {
 
         itemsIndexed(toDoTask) { index, item ->

@@ -10,15 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.example.to_docompose.components.priorityItemScreen
-import com.example.to_docompose.data.domain.model.Priority
 import com.example.to_docompose.data.domain.model.ToDoTask
 import com.example.to_docompose.navigation.action
 import com.example.to_docompose.ui.viewModel.viewModell
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun taskScreen(navigationToListScreen:(action)->Unit,selectedTask :ToDoTask?,viewModell: viewModell){
+fun taskScreen(
+    navigationToListScreen: (action) -> Unit,
+    selectedTask: ToDoTask?,
+    viewModell: viewModell
+) {
 
     val title by viewModell.title
     val desc by viewModell.desc
@@ -28,28 +30,29 @@ fun taskScreen(navigationToListScreen:(action)->Unit,selectedTask :ToDoTask?,vie
     Scaffold(
         topBar = {
             taskAppBar(
-                navigationToListScreen = {action ->
-                    if(action==com.example.to_docompose.navigation.action.NO_ACTION){
+                navigationToListScreen = { action ->
+                    if (action == com.example.to_docompose.navigation.action.NO_ACTION) {
+                        navigationToListScreen(action)
+                    } else {
+                        if (viewModell.validationField()) {
                             navigationToListScreen(action)
-                    }else{
-                        if(viewModell.validationField()){
-                            navigationToListScreen(action)
-                        }else{
+                        } else {
                             showMessage(context)
                         }
                     }
                 },
-                selectedTask =selectedTask )
+                selectedTask = selectedTask
+            )
         },
         content = {
 
-            Box(modifier = Modifier.padding(it)){
-                taskContent(title=title
-                    , onTitleChange = {viewModell.updateTitle(it)}
-                    ,description =desc
-                    , onDescriptionChange = {viewModell.desc.value=it}
-                    , priority =priority
-                    , onPrioritySelected = {viewModell.priority.value=it})
+            Box(modifier = Modifier.padding(it)) {
+                taskContent(title = title,
+                    onTitleChange = { viewModell.updateTitle(it) },
+                    description = desc,
+                    onDescriptionChange = { viewModell.desc.value = it },
+                    priority = priority,
+                    onPrioritySelected = { viewModell.priority.value = it })
             }
 
         }
@@ -57,6 +60,6 @@ fun taskScreen(navigationToListScreen:(action)->Unit,selectedTask :ToDoTask?,vie
 
 }
 
-fun showMessage(context: Context){
-    Toast.makeText(context,"Empty", Toast.LENGTH_SHORT).show()
+fun showMessage(context: Context) {
+    Toast.makeText(context, "Empty", Toast.LENGTH_SHORT).show()
 }

@@ -23,11 +23,12 @@ class viewModell @Inject constructor(
     private val toDoRepository: ToDoRepository
 ) : ViewModel() {
 
-    val action:MutableState<action> = mutableStateOf(com.example.to_docompose.navigation.action.NO_ACTION)
-    var id:MutableState<Int> = mutableStateOf(0)
-    var title:MutableState<String> = mutableStateOf("")
-    var desc:MutableState<String> = mutableStateOf("")
-    var priority:MutableState<Priority> = mutableStateOf(Priority.LOW)
+    val action: MutableState<action> =
+        mutableStateOf(com.example.to_docompose.navigation.action.NO_ACTION)
+    var id: MutableState<Int> = mutableStateOf(0)
+    var title: MutableState<String> = mutableStateOf("")
+    var desc: MutableState<String> = mutableStateOf("")
+    var priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
 
     val serchAppBarState: MutableState<searchAppBarStatus> =
         mutableStateOf(searchAppBarStatus.CLOSED)
@@ -44,105 +45,111 @@ class viewModell @Inject constructor(
     val allTasks: StateFlow<requestState<List<ToDoTask>>> = _allTasks
 
     fun getAllTask() {
-       try {
-           viewModelScope.launch {
-               toDoRepository.getAllTasks.collect {
-                   _allTasks.value = requestState.success(it)
-               }
-           }
-       }catch (e: Exception){
-           requestState.error(e)
-       }
+        try {
+            viewModelScope.launch {
+                toDoRepository.getAllTasks.collect {
+                    _allTasks.value = requestState.success(it)
+                }
+            }
+        } catch (e: Exception) {
+            requestState.error(e)
+        }
     }
 
-    val _selectedTasks:MutableStateFlow<ToDoTask?> =MutableStateFlow(null)
+    val _selectedTasks: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
 //    val selected:StateFlow<ToDoTask?> = _selectedTasks
 
-    fun getSelectedTask(task:Int){
+    fun getSelectedTask(task: Int) {
         viewModelScope.launch {
-            toDoRepository.getSelectedTasks(task = task).collect {task->
+            toDoRepository.getSelectedTasks(task = task).collect { task ->
                 _selectedTasks.value = task
             }
         }
     }
 
 
-    fun selectedTask(toDoTask: ToDoTask?){
-        if(toDoTask != null){
+    fun selectedTask(toDoTask: ToDoTask?) {
+        if (toDoTask != null) {
 
-            id.value=toDoTask.id
-            title.value=toDoTask.title
-            desc.value=toDoTask.description
-            priority.value=toDoTask.priority
-        }else{
-            id.value=0
-            title.value=""
-            desc.value=""
-            priority.value=Priority.LOW
+            id.value = toDoTask.id
+            title.value = toDoTask.title
+            desc.value = toDoTask.description
+            priority.value = toDoTask.priority
+        } else {
+            id.value = 0
+            title.value = ""
+            desc.value = ""
+            priority.value = Priority.LOW
         }
     }
-        fun updateTitle(newTitle:String){
-            if(newTitle.length<15){
-                title.value=newTitle
-            }
+
+    fun updateTitle(newTitle: String) {
+        if (newTitle.length < 15) {
+            title.value = newTitle
         }
-    fun validationField():Boolean{
+    }
+
+    fun validationField(): Boolean {
         return title.value.isNotEmpty() && desc.value.isNotEmpty()
     }
 
-    fun addTask(){
+    fun addTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            val toDoTask=ToDoTask(
-                title=title.value,
+            val toDoTask = ToDoTask(
+                title = title.value,
                 description = desc.value,
                 priority = priority.value
             )
-            toDoRepository.addTask(task=toDoTask)
+            toDoRepository.addTask(task = toDoTask)
         }
     }
 
-    fun handleDataBaseAction(action: action){
-        when(action){
-            com.example.to_docompose.navigation.action.ADD->{
-                    addTask()
+    fun handleDataBaseAction(action: action) {
+        when (action) {
+            com.example.to_docompose.navigation.action.ADD -> {
+                addTask()
             }
-            com.example.to_docompose.navigation.action.UPDATE->{
+
+            com.example.to_docompose.navigation.action.UPDATE -> {
                 updateTask()
             }
-            com.example.to_docompose.navigation.action.DELETE->{
+
+            com.example.to_docompose.navigation.action.DELETE -> {
                 deleteTask()
             }
-            com.example.to_docompose.navigation.action.UNOD->{
 
+            com.example.to_docompose.navigation.action.UNOD -> {
+                addTask()
             }
-            else->{
+
+            else -> {
 
             }
         }
-        this.action.value=com.example.to_docompose.navigation.action.NO_ACTION
+        this.action.value = com.example.to_docompose.navigation.action.NO_ACTION
     }
 
-    fun updateTask(){
+    fun updateTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            val toDoTask=ToDoTask(
-                id=id.value,
-                title=title.value,
-                description=desc.value,
-                priority=priority.value
+            val toDoTask = ToDoTask(
+                id = id.value,
+                title = title.value,
+                description = desc.value,
+                priority = priority.value
             )
-            toDoRepository.updateTask(task=toDoTask)
+            toDoRepository.updateTask(task = toDoTask)
         }
     }
 
-    fun deleteTask(){
+    fun deleteTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            val toDoTask=ToDoTask(
-                id=id.value,
-                title=title.value,
-                description=desc.value,
-                priority=priority.value
+            val toDoTask = ToDoTask(
+                id = id.value,
+                title = title.value,
+                description = desc.value,
+                priority = priority.value
             )
-            toDoRepository.deleteTask(task=toDoTask)
+            toDoRepository.deleteTask(task = toDoTask)
         }
     }
 
