@@ -30,6 +30,7 @@ fun listScreen(
 
     val action by viewModell.action
     val allTAsks by viewModell.allTasks.collectAsState()
+    val searchedTask by viewModell._searcheTask.collectAsState()
     val searchAppBarStatus: searchAppBarStatus by viewModell.serchAppBarState
     val searchText: String by viewModell.searchText
     val snackbarHostState = remember { SnackbarHostState() }
@@ -48,7 +49,11 @@ fun listScreen(
 
     Scaffold(
         content = {
-            listContent(toDoTask = allTAsks, navigationToTaskScreen = navigateToTaskScreen, it)
+            listContent(toDoTask = allTAsks,
+                navigationToTaskScreen = navigateToTaskScreen,
+                it
+                ,searchedTasks =searchedTask
+                ,searchAppBarState=searchAppBarStatus)
         },
         floatingActionButton = {
             ListFab(onFabClick = navigateToTaskScreen)
@@ -99,7 +104,8 @@ fun snakBar(
         if (action != com.example.to_docompose.navigation.action.NO_ACTION) {
             scope.launch {
                 val snackResult = scaffold.showSnackbar(
-                    message = "${action.name} : ${taskTitle}",
+                    message = setMessage(action,taskTitle)
+                    ,
                     actionLabel = actionSnakBar(action)
                 )
 
@@ -110,6 +116,12 @@ fun snakBar(
 
 }
 
+fun setMessage(action: action,title: String):String{
+        return when (action) {
+            com.example.to_docompose.navigation.action.DELETEALL->"Delete All"
+            else->"$action : $title"
+        }
+}
 fun actionSnakBar(action: action): String {
     return if (action.name == "DELETE") {
         "UNDO"

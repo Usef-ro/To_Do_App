@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.to_docompose.R
 import com.example.to_docompose.data.domain.model.Priority
+import com.example.to_docompose.navigation.action
 import com.example.to_docompose.ui.viewModel.viewModell
 
 @Composable
@@ -51,7 +52,7 @@ fun listAppBar(
     when (seachAppBarStatus) {
 
         searchAppBarStatus.CLOSED -> {
-            defaultListAppBar(onDelete = {}, sort = {}, onSearchClick = {
+            defaultListAppBar(onDelete = {viewModell.action.value==action.DELETEALL}, sort = {}, onSearchClick = {
                 viewModell.serchAppBarState.value = searchAppBarStatus.OPENED
 
 
@@ -65,7 +66,7 @@ fun listAppBar(
                 viewModell.searchText.value = ""
                 viewModell.serchAppBarState.value = searchAppBarStatus.CLOSED
             }, onSearchClick = {
-                viewModell.serchAppBarState.value = searchAppBarStatus.OPENED
+                viewModell.searchDataBase(search = it)
             })
         }
     }

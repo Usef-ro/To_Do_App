@@ -1,5 +1,6 @@
 package com.example.to_docompose.ui.screens.task
 
+import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -11,8 +12,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.to_docompose.R
+import com.example.to_docompose.components.displayAlertDialog
 import com.example.to_docompose.data.domain.model.Priority
 import com.example.to_docompose.data.domain.model.ToDoTask
 import com.example.to_docompose.navigation.action
@@ -90,6 +98,17 @@ fun existAppBar(
     selectedTask: ToDoTask,
     navigationToListScreen: (action) -> Unit
 ) {
+
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+
+    displayAlertDialog(title = stringResource(id = R.string.delete_task,selectedTask.title )
+        , message = stringResource(id = R.string.delete_task_confirmation,selectedTask.title)
+        , openDialog =openDialog
+        , closeDialog ={openDialog=false} ) {
+        
+    }
     TopAppBar(title = {
         Text(text = selectedTask.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
     },
@@ -159,6 +178,8 @@ fun updateAction(
 
 }
 
+
+
 @Composable
 @Preview
 
@@ -168,6 +189,9 @@ fun prev8() {
         selectedTask = ToDoTask(id = 0, title = "pop", description = "Pop", priority = Priority.LOW)
     )
 }
+
+
+
 
 @Composable
 @Preview

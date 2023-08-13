@@ -56,8 +56,27 @@ class viewModell @Inject constructor(
         }
     }
 
+    val _searcheTask: MutableStateFlow<requestState<List<ToDoTask>>> = MutableStateFlow(requestState.idle)
+    val searched:StateFlow<requestState<List<ToDoTask>>> = _searcheTask
+
+
+    fun searchDataBase(search:String) {
+        try {
+            viewModelScope.launch {
+                _searcheTask.value=requestState.loading
+                toDoRepository.searchDataBase(searchQuery = "%$search%").collect{
+                    _searcheTask.value = requestState.success(it)
+                }
+            }
+        } catch (e: Exception) {
+            _searcheTask.value=requestState.error(e)
+        }
+        serchAppBarState.value=searchAppBarStatus.TRIGGERED
+    }
+
+
     val _selectedTasks: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
-//    val selected:StateFlow<ToDoTask?> = _selectedTasks
+    val selected:StateFlow<ToDoTask?> = _selectedTasks
 
     fun getSelectedTask(task: Int) {
         viewModelScope.launch {
@@ -121,6 +140,9 @@ class viewModell @Inject constructor(
             com.example.to_docompose.navigation.action.UNOD -> {
                 addTask()
             }
+            com.example.to_docompose.navigation.action.DELETEALL->{
+                deleteAll()
+            }
 
             else -> {
 
@@ -141,6 +163,11 @@ class viewModell @Inject constructor(
         }
     }
 
+    fun deleteAll(){
+        viewModelScope.launch(Dispatchers.IO) {
+            toDoRepository.deleteAll()
+        }
+    }
     fun deleteTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val toDoTask = ToDoTask(

@@ -4,6 +4,7 @@ enum class action {
     ADD,
     UPDATE,
     DELETE,
+    DELETEALL,
     UNOD,
     NO_ACTION
 }
@@ -13,7 +14,9 @@ fun String?.action(): action {
         this == "ADD" -> {
             action.ADD
         }
-
+        this=="DELETEALL"->{
+            action.DELETEALL
+        }
         this == "UPDATE" -> {
             action.UPDATE
         }

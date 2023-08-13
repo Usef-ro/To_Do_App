@@ -1,5 +1,6 @@
 package com.example.to_docompose
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,12 +28,20 @@ class MainActivity : ComponentActivity() {
                     navHostController = navController, viewModell = viewModell
                 )
             }
+
         }
+
     }
 }
 
-
-@Preview(showBackground = true)
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "DefaultPreviewDark"
+)
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    name = "DefaultPreviewLight"
+)
 @Composable
 fun GreetingPreview() {
     ToDoComposeTheme {
