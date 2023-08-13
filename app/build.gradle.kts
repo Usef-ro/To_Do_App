@@ -82,9 +82,11 @@ dependencies {
 
 
 
-    //Database
-    androidTestImplementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    //Database
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
 
 
     //Dagger
