@@ -12,7 +12,7 @@ val splash:()->Unit={
         }
     }
 }
-    val list: (action) -> Unit = { action ->
+      val list: (action) -> Unit = { action ->
         navController.navigate("list/${action.name}") {
             popUpTo(LIST_SCREEN) {
                 inclusive = true

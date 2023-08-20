@@ -1,5 +1,6 @@
 package com.example.to_docompose.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -9,8 +10,10 @@ import com.example.to_docompose.ui.screens.list.listScreen
 import com.example.to_docompose.ui.viewModel.viewModell
 import com.example.to_docompose.util.Constants
 import com.example.to_docompose.util.Constants.LIST_ARGUMENT_KEY
+import com.google.accompanist.navigation.animation.composable
 
 
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.listComposable(
     navigateToTaskScreen: (taskId: Int) -> Unit,
     viewModell: viewModell
