@@ -52,11 +52,14 @@ fun listAppBar(
     when (seachAppBarStatus) {
 
         searchAppBarStatus.CLOSED -> {
-            defaultListAppBar(onDelete = {viewModell.action.value==action.DELETEALL}, sort = {}, onSearchClick = {
-                viewModell.serchAppBarState.value = searchAppBarStatus.OPENED
+            defaultListAppBar(
+                onDelete = { viewModell.action.value == action.DELETEALL },
+                sort = {},
+                onSearchClick = {
+                    viewModell.serchAppBarState.value = searchAppBarStatus.OPENED
 
 
-            })
+                })
         }
 
         else -> {

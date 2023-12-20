@@ -25,11 +25,10 @@ fun displayAlertDialog(
     title: String,
     message: String,
     openDialog: Boolean,
-    closeDialog: ()-> Unit
-    ,onYesClick: () -> Unit
-){
-    
-    if(openDialog){
+    closeDialog: () -> Unit, onYesClick: () -> Unit
+) {
+
+    if (openDialog) {
         AlertDialog(
 
             onDismissRequest = {

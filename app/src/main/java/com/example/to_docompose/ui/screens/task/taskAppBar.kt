@@ -1,6 +1,5 @@
 package com.example.to_docompose.ui.screens.task
 
-import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -103,11 +102,11 @@ fun existAppBar(
         mutableStateOf(false)
     }
 
-    displayAlertDialog(title = stringResource(id = R.string.delete_task,selectedTask.title )
-        , message = stringResource(id = R.string.delete_task_confirmation,selectedTask.title)
-        , openDialog =openDialog
-        , closeDialog ={openDialog=false} ) {
-        
+    displayAlertDialog(title = stringResource(id = R.string.delete_task, selectedTask.title),
+        message = stringResource(id = R.string.delete_task_confirmation, selectedTask.title),
+        openDialog = openDialog,
+        closeDialog = { openDialog = false }) {
+
     }
     TopAppBar(title = {
         Text(text = selectedTask.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -179,7 +178,6 @@ fun updateAction(
 }
 
 
-
 @Composable
 @Preview
 
@@ -189,8 +187,6 @@ fun prev8() {
         selectedTask = ToDoTask(id = 0, title = "pop", description = "Pop", priority = Priority.LOW)
     )
 }
-
-
 
 
 @Composable

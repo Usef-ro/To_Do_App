@@ -42,8 +42,10 @@ fun priorityItemScreen(
         mutableStateOf(false)
     }
     val angle: Float by animateFloatAsState(
+
         targetValue =
         if (expanded) 180f else 0f, label = ""
+
     )
 
     Row(
@@ -65,7 +67,9 @@ fun priorityItemScreen(
                 .size(PRIORITY_INDICATORE_SIZE)
                 .weight(1f)
         ) {
+
             drawCircle(color = priority.color)
+
         }
 
         Text(

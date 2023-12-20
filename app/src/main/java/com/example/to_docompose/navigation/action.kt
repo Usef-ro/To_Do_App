@@ -14,9 +14,11 @@ fun String?.action(): action {
         this == "ADD" -> {
             action.ADD
         }
-        this=="DELETEALL"->{
+
+        this == "DELETEALL" -> {
             action.DELETEALL
         }
+
         this == "UPDATE" -> {
             action.UPDATE
         }

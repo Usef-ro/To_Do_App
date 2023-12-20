@@ -6,35 +6,38 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.to_docompose.ui.viewModel.viewModell
-import com.example.to_docompose.util.Constants.LIST_SCREEN
 import com.example.to_docompose.util.Constants.SPLASH_SCREEN
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-
 
 @OptIn(ExperimentalAnimationApi::class)
+@ExperimentalAnimationApi
 @Composable
 fun setupNavigation(
     navHostController: NavHostController, viewModell: viewModell
 ) {
 
     val sreen = remember(navHostController) {
+
         screen(navHostController)
+
     }
 
-    AnimatedNavHost(
+    NavHost(
         navController = navHostController,
         startDestination = SPLASH_SCREEN
     ) {
+
         splashScreenComposable(
             navigateToTaskScreen = sreen.splash
         )
+
         listComposable(
             navigateToTaskScreen = sreen.task, viewModell = viewModell
         )
+
         taskComposable(
             navigateToListScreen = sreen.list, viewModell = viewModell
         )
+
     }
 
 }

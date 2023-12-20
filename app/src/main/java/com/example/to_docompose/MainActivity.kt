@@ -13,20 +13,20 @@ import androidx.navigation.compose.rememberNavController
 import com.example.to_docompose.navigation.setupNavigation
 import com.example.to_docompose.ui.theme.ToDoComposeTheme
 import com.example.to_docompose.ui.viewModel.viewModell
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @OptIn(ExperimentalAnimationApi::class)
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    lateinit var navController: NavHostController
+    private lateinit var navController: NavHostController
     val viewModell: viewModell by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ToDoComposeTheme {
-                navController = rememberAnimatedNavController()
+//                navController = rememberAnimatedNavController()
+                 navController= rememberNavController()
                 setupNavigation(
                     navHostController = navController, viewModell = viewModell
                 )

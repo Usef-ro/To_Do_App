@@ -49,24 +49,26 @@ fun listContent(
     toDoTask: requestState<List<ToDoTask>>,
     navigationToTaskScreen: (taskId: Int) -> Unit,
     padding: PaddingValues,
-    searchedTasks:requestState<List<ToDoTask>>,
-    searchAppBarState:searchAppBarStatus
+    searchedTasks: requestState<List<ToDoTask>>,
+    searchAppBarState: searchAppBarStatus
 ) {
-    Log.e("searchAppBarState",""+searchAppBarState)
-    if (searchAppBarState==searchAppBarStatus.TRIGGERED){
+    Log.e("searchAppBarState", "" + searchAppBarState)
+    if (searchAppBarState == searchAppBarStatus.TRIGGERED) {
 
-        if (searchedTasks is requestState.success){
+        if (searchedTasks is requestState.success) {
             hanldeListContent(
-                task = searchedTasks.data
-                , navigationToTaskScreen = navigationToTaskScreen
-                , padding =padding )
+                task = searchedTasks.data,
+                navigationToTaskScreen = navigationToTaskScreen,
+                padding = padding
+            )
         }
-    }else {
-        if (toDoTask is requestState.success){
+    } else {
+        if (toDoTask is requestState.success) {
             hanldeListContent(
                 task = toDoTask.data,
                 navigationToTaskScreen = navigationToTaskScreen,
-                padding = padding)
+                padding = padding
+            )
         }
 
     }
@@ -74,23 +76,24 @@ fun listContent(
 
 @Composable
 fun hanldeListContent(
-    task:List<ToDoTask>,
+    task: List<ToDoTask>,
     navigationToTaskScreen: (taskId: Int) -> Unit,
     padding: PaddingValues
-){
+) {
 
-        if (task.isEmpty()) {
+    if (task.isEmpty()) {
 
-            emptyContent(padding = padding)
-        } else {
-            listTask(
-                toDoTask = task,
-                navigationToTaskScreen = navigationToTaskScreen,
-                padding = padding
-            )
-        }
+        emptyContent(padding = padding)
+    } else {
+        listTask(
+            toDoTask = task,
+            navigationToTaskScreen = navigationToTaskScreen,
+            padding = padding
+        )
+    }
 
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun listTask(
@@ -102,19 +105,20 @@ fun listTask(
 
         itemsIndexed(toDoTask) { index, item ->
 
-            val dismissState= rememberDismissState()
-            val degrees by animateFloatAsState(targetValue =
-            if (dismissState.targetValue==DismissValue.Default)
-                0f
-            else
-                -45f)
+            val dismissState = rememberDismissState()
+            val degrees by animateFloatAsState(
+                targetValue =
+                if (dismissState.targetValue == DismissValue.Default)
+                    0f
+                else
+                    -45f
+            )
             SwipeToDismiss(dismissContent = {
                 taskItem(toDoTask = item, navigationToTaskScreen = navigationToTaskScreen)
             },
 //                dismissThresholds = { FractionalThreshold(0.2f) },
-                state =dismissState
-                , background ={ redBackground(degress =degrees )}  ,
-                directions = setOf(DismissDirection.EndToStart) )
+                state = dismissState, background = { redBackground(degress = degrees) },
+                directions = setOf(DismissDirection.EndToStart))
 
         }
     }
@@ -179,20 +183,24 @@ fun taskItem(
 }
 
 @Composable
-fun redBackground(degress:Float){
+fun redBackground(degress: Float) {
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(HighPriorityColor)
-        .padding(horizontal = LARGE_PADDING),
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(HighPriorityColor)
+            .padding(horizontal = LARGE_PADDING),
         contentAlignment = Alignment.CenterEnd
-    ){
-        Icon(imageVector = Icons.Filled.Delete,
-            modifier = Modifier.rotate(degrees = degress)
-            , contentDescription ="",tint= Color.White
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Delete,
+            modifier = Modifier.rotate(degrees = degress),
+            contentDescription = "",
+            tint = Color.White
         )
     }
 }
+
 @Composable
 @Preview
 fun prev7() {
