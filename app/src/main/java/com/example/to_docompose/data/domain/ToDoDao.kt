@@ -30,6 +30,7 @@ interface ToDoDao {
     @Delete
     suspend fun deleteTask(taskId: ToDoTask)
 
+
     @Query("DELETE FROM ${Constants.DATABASE_TABLE}")
     suspend fun deleteAllTasks()
 
